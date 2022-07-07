@@ -11,9 +11,6 @@ namespace ResourceManagment.Repository
         {
             _Context = context;
         }
-
-
-
         IList<UserProjectResponse> IUserProjectRepository.GetUserProject()
         {
 
