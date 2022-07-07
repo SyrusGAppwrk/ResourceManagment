@@ -57,6 +57,10 @@ namespace ResourceManagment.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.ClientName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
                     .HasColumnName("createdDate");
@@ -65,6 +69,10 @@ namespace ResourceManagment.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("name");
+
+                entity.Property(e => e.Platformm)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Status).HasColumnName("status");
             });

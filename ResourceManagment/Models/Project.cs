@@ -14,6 +14,8 @@ namespace ResourceManagment.Models
         public string? Name { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? Status { get; set; }
+        public string? ClientName { get; set; }
+        public string? Platformm { get; set; }
 
         public virtual ICollection<UserProject> UserProjects { get; set; }
     }

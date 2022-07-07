@@ -50,6 +50,8 @@ namespace ResourceManagment.Repository
             {
                 list.Name = project.Name;
                 list.Status = project.Status;
+                list.ClientName = project.ClientName;
+                list.Platformm=project.Platformm;
                 await _Context.SaveChangesAsync();
             }
             return null;
