@@ -14,7 +14,7 @@ namespace ResourceManagment.Models
 
         public int Id { get; set; }
         public string? Name { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }=DateTime.Now;
         public string? Email { get; set; }
         public string? Password { get; set; }
         public int? Departmentid { get; set; }

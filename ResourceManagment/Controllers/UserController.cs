@@ -4,7 +4,7 @@ using ResourceManagment.Repository;
 
 namespace ResourceManagment.Controllers
 {
-    [Route("Api/v1")]
+    [Route("api/v1")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -105,7 +105,9 @@ namespace ResourceManagment.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not found"));
             }
         }
-        [HttpPut("{id:int}")]
+
+        [HttpPut]
+        [Route("Update/{id}")]
         public async Task<ActionResult<User>> UpdateUser(int id,User user)
         {
             try
@@ -114,17 +116,13 @@ namespace ResourceManagment.Controllers
                 {
                     return NotFound("Id Not Found");
                 }
-                var usr= await _userRepository.GetUsers(id);
-                if (usr == null)
-                {
-                    return BadRequest("Not Found");
-                }
+                
                 return await _userRepository.UpdateUser(user);
             }
             catch (Exception)
             {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not found"));
+                throw;
             }
         }
     }

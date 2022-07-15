@@ -15,7 +15,7 @@ namespace ResourceManagment.Repository
         {
             var users = await _Context.Users.AddAsync(user);
             await _Context.SaveChangesAsync();
-            return user;
+            return users.Entity;
         }
 
         public async Task<User> DeleteUser(int id)

@@ -43,8 +43,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
+app.UseHttpsRedirection();
+
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+app.UseAuthentication();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+app.MapControllers();
+
+app.Run();
 
 app.UseSwagger();
 
@@ -53,7 +69,3 @@ app.UseSwaggerUI(x =>
     var prefix = string.IsNullOrEmpty(x.RoutePrefix) ? "." : "..";
     x.SwaggerEndpoint($"{prefix}/swagger/v1/swagger.json", "Resource Management Application API doc");
 });
-
-app.MapControllers();
-
-app.Run();
