@@ -1,8 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using ResourceManagment.Configurations;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
+IWebHostEnvironment environment = builder.Environment;
 
 // Add services to the container.
 
@@ -12,6 +18,30 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionStrings:myCon"];
 builder.Services.AddDbContext<dbResourceMangamentSystemContext>(options => options.UseSqlServer(connectionString));
+// Jwt Configuration 
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+//Jwt Authentication 
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(option =>
+    {
+        option.SaveToken = true;
+        option.RequireHttpsMetadata = false;
+        option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidAudience = configuration["JwtConfig:ValidAudience"],
+            ValidIssuer = configuration["JwtConfig:ValidIssuer"],
+            RequireExpirationTime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfig:Secret"])),
+            ValidateIssuerSigningKey = true
+        };
+    });
 builder.Services.AddSwaggerGen(x =>
 {
     x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -30,6 +60,7 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectRepository>();
+builder.Services.AddScoped<ILoginManger, ILoginMangerClass>();
 builder.Services.AddCors(c =>
 {
     c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
