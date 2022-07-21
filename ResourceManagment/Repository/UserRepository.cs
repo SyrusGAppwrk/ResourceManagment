@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ResourceManagment.Models;
+using ResourceManagment.ResponseModal;
 
 namespace ResourceManagment.Repository
 {
@@ -42,11 +43,12 @@ namespace ResourceManagment.Repository
             return uses;
         }
 
+       
         public async Task<User> GetUsers(int id)
         {
-            var users = await _Context.Users.FirstOrDefaultAsync(x => x.Id == id);
-                return users;
-            
+            var users = await _Context.Users.FirstOrDefaultAsync(x => x.Id == id);  
+            return users;
+          
         }
 
         public async Task<IEnumerable<User>> GetUsers()
@@ -66,10 +68,50 @@ namespace ResourceManagment.Repository
                 users.Status=user.Status;
                 users.RoleId=user.RoleId;
                 users.Departmentid = user.Departmentid;
+                users.ContactNo=user.ContactNo;
+                users.Skills=user.Skills;
+                users.Experience=user.Experience;   
                 await _Context.SaveChangesAsync();
             }
             return null;
 
+        }
+
+        IList<UserProfile> IUserRepository.GetUserProfiles(int id)
+        {
+            var userbyId = (from u in _Context.Users
+                            join d in _Context.Departments on u.Departmentid equals d.Id
+                            join r in _Context.Roles on u.RoleId equals r.Id
+                            where u.Id == id
+                            select new
+                            {
+                                userid = u.Id,
+                                UserName = u.Name,
+                                Email = u.Email,
+                                Department = d.Name,
+                                Experience = u.Experience,
+                                Skills = u.Skills,
+                                Contact = u.ContactNo,
+                                Role = r.Name
+
+                            }).ToList();
+        IList<UserProfile> data = new List<UserProfile>();
+            foreach (var item in userbyId)
+            {
+                data.Add(new UserProfile()
+                 {
+                    id=item.userid,
+                    Name=item.UserName,
+                    Email=item.Email,
+                    Department=item.Department,
+                    Experience=item.Experience,
+                    Skills=item.Skills,
+                    ContactNo=item.Contact,
+                    Role=item.Role
+               
+                });
+            }
+            return data;
         }
     }
 }

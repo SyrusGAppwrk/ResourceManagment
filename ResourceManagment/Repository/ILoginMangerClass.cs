@@ -18,7 +18,7 @@ namespace ResourceManagment.Repository
 
         public LoginresponseModal validateUser(User user)
         {
-            // Check User Creds 
+            // Check User Creds --validate user
             var result = _Context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password==user.Password);
             var returnedToken = "";
             //LoginResponse 

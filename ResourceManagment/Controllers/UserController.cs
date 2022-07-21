@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
+using ResourceManagment.ResponseModal;
 
 namespace ResourceManagment.Controllers
 {
@@ -46,6 +47,7 @@ namespace ResourceManagment.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not found"));
             }
         }
+
         [HttpGet]
         [Route("GetUserRole")]
             
@@ -123,6 +125,26 @@ namespace ResourceManagment.Controllers
             {
 
                 throw;
+            }
+        }
+        [HttpGet]
+        [Route("GetUserProfiles")]
+        public async Task<ActionResult> GetUserProfiles(int id)
+        {
+            try
+            {
+                var users =  _userRepository.GetUserProfiles(id);
+                if (users == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(users);
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not found"));
             }
         }
     }

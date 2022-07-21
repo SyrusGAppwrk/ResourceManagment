@@ -18,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionStrings:myCon"];
 builder.Services.AddDbContext<dbResourceMangamentSystemContext>(options => options.UseSqlServer(connectionString));
+
 // Jwt Configuration 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 //Jwt Authentication 

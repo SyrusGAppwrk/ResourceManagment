@@ -12,7 +12,7 @@
         public string ManagerName { get; set; }
         public int pmid { get; set; }
         public string Avalibiltty { get; set; }
-        public string TotalBilling { get; set; }
+        public double? TotalBilling { get; set; }
       
 
     }

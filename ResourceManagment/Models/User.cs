@@ -14,12 +14,15 @@ namespace ResourceManagment.Models
 
         public int Id { get; set; }
         public string? Name { get; set; }
-        public DateTime? CreatedDate { get; set; }=DateTime.Now;
+        public DateTime? CreatedDate { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
         public int? Departmentid { get; set; }
         public int? RoleId { get; set; }
         public int? Status { get; set; }
+        public int? Experience { get; set; }
+        public string? Skills { get; set; }
+        public string? ContactNo { get; set; }
 
         public virtual Department? Department { get; set; }
         public virtual Role? Role { get; set; }
