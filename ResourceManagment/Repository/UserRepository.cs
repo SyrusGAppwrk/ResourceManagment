@@ -77,12 +77,12 @@ namespace ResourceManagment.Repository
 
         }
 
-        IList<UserProfile> IUserRepository.GetUserProfiles(int id)
+        IList<UserProfile> IUserRepository.GetUserProfiles(int id,int roleid)
         {
             var userbyId = (from u in _Context.Users
-                            join d in _Context.Departments on u.Departmentid equals d.Id
+                            join d in _Context.Departments on u.Departmentid equals d.Id 
                             join r in _Context.Roles on u.RoleId equals r.Id
-                            where u.Id == id
+                            where u.Id == id || u.RoleId==roleid
                             select new
                             {
                                 userid = u.Id,
@@ -92,7 +92,10 @@ namespace ResourceManagment.Repository
                                 Experience = u.Experience,
                                 Skills = u.Skills,
                                 Contact = u.ContactNo,
-                                Role = r.Name
+                                Role = r.Name,
+                                Roleid=u.RoleId,
+                                Departmentid=u.Departmentid, 
+                                status=u.Status,
 
                             }).ToList();
         IList<UserProfile> data = new List<UserProfile>();
@@ -107,8 +110,10 @@ namespace ResourceManagment.Repository
                     Experience=item.Experience,
                     Skills=item.Skills,
                     ContactNo=item.Contact,
-                    Role=item.Role
-               
+                    Role=item.Role,
+                    Roleid=item.Roleid,
+                    Departmentid=item.Departmentid,
+                    Status=item.status
                 });
             }
             return data;

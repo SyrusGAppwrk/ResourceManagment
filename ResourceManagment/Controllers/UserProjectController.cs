@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
+using ResourceManagment.ResponseModal;
 
 namespace ResourceManagment.Controllers
 {
     [Route("Api/v2")]
     [ApiController]
+   // [Authorize]
     public class UserProjectController : ControllerBase
     {
         private readonly IUserProjectRepository _userProjectRepository;
@@ -24,6 +27,23 @@ namespace ResourceManagment.Controllers
 
             }
             catch (Exception )
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not Found"));
+            }
+        }
+
+        [HttpGet]
+        [Route("GetUserProjectbyDate")]
+        public async Task<ActionResult<UserProjectResponse>> GetUserProjectbyDate(DateTime Sdate, DateTime edate)
+        {
+            try
+            {
+                var data = _userProjectRepository.GetUserProjectbyDate(Sdate,edate);
+                return Ok(data);
+
+            }
+            catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not Found"));

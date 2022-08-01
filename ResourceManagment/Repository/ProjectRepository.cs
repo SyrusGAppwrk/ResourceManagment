@@ -30,13 +30,6 @@ namespace ResourceManagment.Repository
             return null;
 
         }
-
-        public async Task<IEnumerable<Project>> GetProjects()
-        {
-            var list = await _Context.Projects.ToListAsync();
-            return list;
-        }
-
         public async Task<Project> GetProjects(int id)
         {
             var list = await _Context.Projects.FirstOrDefaultAsync(x => x.Id == id);
@@ -51,11 +44,53 @@ namespace ResourceManagment.Repository
                 list.Name = project.Name;
                 list.Status = project.Status;
                 list.ClientName = project.ClientName;
-                list.Platformm=project.Platformm;
+                list.Platformm = project.Platformm;
+                list.Tech = project.Tech;
+                list.Code = project.Code;
+                list.Url = project.Url;
+                list.Sdate = project.Sdate;
+                list.Edate = project.Edate;
                 await _Context.SaveChangesAsync();
             }
             return null;
 
+        }
+
+        IList<Project> IProjectRepository.GetProjects()
+        {
+            //var list = await _Context.Projects.ToListAsync();
+            var list = (from p in _Context.Projects
+                        select new
+                        {
+                            p.Id,
+                            p.Name,
+                            p.ClientName,
+                            p.Platformm,
+                            p.Tech,
+                            p.Code,
+                            p.Url,
+                            sdate = Convert.ToDateTime(p.Sdate).ToString("yyyy-MM-dd"),
+                            edate = Convert.ToDateTime(p.Edate).ToString("yyyy-MM-dd"),
+                            p.Status
+                        }).ToList();
+            IList<Project>data=new List<Project>();
+            foreach (var item in list)
+            {
+                data.Add(new Project()
+                {
+                    Id= item.Id,
+                    Name= item.Name,
+                    ClientName= item.ClientName,
+                    Platformm= item.Platformm,
+                    Tech= item.Tech,
+                    Code= item.Code,
+                    Url= item.Url,
+                    SrtDate=item.sdate,
+                    EndDate=item.edate,
+                    Status= item.Status
+                });
+            }
+            return data;
         }
     }
 }

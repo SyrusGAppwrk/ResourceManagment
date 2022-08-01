@@ -7,7 +7,7 @@ namespace ResourceManagment.Repository
     {
         public Task<IEnumerable<User>> GetUsers();
         public Task<User> GetUsers(int id);
-        public IList<UserProfile>GetUserProfiles(int id);
+        public IList<UserProfile>GetUserProfiles(int id,int roleid);
         public Task<IEnumerable<User>> GetUserRole(int Roleid);
         public Task<IEnumerable<User>>GetUserDepartment(int Depid);
         public Task<User> AddUser(User user);

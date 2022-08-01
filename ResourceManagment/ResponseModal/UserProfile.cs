@@ -12,5 +12,7 @@
         public int? Experience { get; set; }
         public string? Skills { get; set; }
         public string? ContactNo {  get; set; }
+        public int? Roleid {  get; set; }
+        public int? Departmentid {  get; set; }
     }
 }

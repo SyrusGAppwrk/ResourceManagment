@@ -31,8 +31,8 @@ namespace ResourceManagment.Repository
 
                 var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JwtConfig:Secret"]));
                 var token = new JwtSecurityToken(
-                        issuer: _configuration["JWT:ValidIssuer"],
-                        audience: _configuration["JWT:ValidAudience"],
+                        issuer: _configuration["JwtConfig:ValidIssuer"],
+                        audience: _configuration["JwtConfig:ValidAudience"],
                         expires: DateTime.Now.AddDays(1),
                         signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
                         );
@@ -42,7 +42,7 @@ namespace ResourceManagment.Repository
             
             obj.Message = "";
             obj.ReturenedToken = returnedToken;
-            //obj.User = result;
+            obj.User = result;
             return obj;
         }
     }

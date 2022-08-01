@@ -20,6 +20,43 @@ namespace ResourceManagment.Repository
 
         }
 
+        public IList<UserProjectResponse> GetUserProjectbyDate(DateTime Sdate, DateTime edate)
+        {
+            var list = (from up in _Context.UserProjects
+                        join u in _Context.Users on up.UserId equals u.Id
+                        join d in _Context.Departments on u.Departmentid equals d.Id
+                        join p in _Context.Projects on up.Projectid equals p.Id
+                        join upc in _Context.Users on up.Pcid equals upc.Id
+                        join upm in _Context.Users on up.Pmid equals upm.Id
+                        where up.CreatedDate >= Sdate.Date && up.CreatedDate <= edate.Date
+                        select new
+                        {
+                            Name=u.Name,
+                            Department =d.Name  ,
+                            ProjectName =p.Name,
+                            Coordinator = upc.Name ,
+                            Manger = upm.Name ,
+                            up.Avalibiltty,
+                            up.TotalBilling
+                        }).OrderBy(x=>x.Department).ToList();
+            IList<UserProjectResponse> data = new List<UserProjectResponse>();
+            foreach (var item in list)
+            {
+
+                data.Add(new UserProjectResponse() {
+                    UserName=item.Name,
+                    Department=item.Department,
+                    ProjectName=item.ProjectName,
+                    CordinatorName=item.Coordinator,
+                    ManagerName=item.Manger,
+                    Avalibiltty=item.Avalibiltty,
+                    TotalBilling=item.TotalBilling,
+                });
+            }
+                
+                    return data;
+        }
+
         public async Task<IEnumerable<UserProject>> GetUserProjectsid()
         {
             var list = await _Context.UserProjects.ToListAsync();
@@ -38,6 +75,7 @@ namespace ResourceManagment.Repository
                 data.Pcid = userProject.Pcid;
                 data.Pmid = userProject.Pmid;
                 data.Status = userProject.Status;
+                data.Comments = userProject.Comments;
                 await _Context.SaveChangesAsync();
             }
             return null;
@@ -67,7 +105,8 @@ namespace ResourceManagment.Repository
                               pmid = upm.Id,
                               up.Avalibiltty,
                               up.TotalBilling,
-                              up.Status
+                              up.Status,
+                              up.Comments
                           }).ToList();
             IList<UserProjectResponse> data = new List<UserProjectResponse>();
             foreach (var item in upList)
@@ -84,7 +123,8 @@ namespace ResourceManagment.Repository
                     ManagerName = item.ManagerName,
                     pmid = item.pmid,
                     Avalibiltty = item.Avalibiltty,
-                    TotalBilling = item.TotalBilling
+                    TotalBilling = item.TotalBilling,
+                    Comments=item.Comments
                 });
             }
             return data;

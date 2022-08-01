@@ -63,9 +63,17 @@ namespace ResourceManagment.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Code)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
                     .HasColumnName("createdDate");
+
+                entity.Property(e => e.Edate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EDate");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -76,7 +84,19 @@ namespace ResourceManagment.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Sdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SDate");
+
                 entity.Property(e => e.Status).HasColumnName("status");
+
+                entity.Property(e => e.Tech)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Url)
+                    .IsUnicode(false)
+                    .HasColumnName("URL");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -149,6 +169,8 @@ namespace ResourceManagment.Models
                 entity.Property(e => e.Avalibiltty)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Comments).IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")

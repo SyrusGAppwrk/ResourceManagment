@@ -1,11 +1,14 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
 
 namespace ResourceManagment.Controllers
 {
+   // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+   
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentRepository _departmentRepository;

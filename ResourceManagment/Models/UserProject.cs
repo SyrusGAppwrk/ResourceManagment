@@ -12,8 +12,9 @@ namespace ResourceManagment.Models
         public int? Pmid { get; set; }
         public string? Avalibiltty { get; set; }
         public double? TotalBilling { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }=DateTime.Now;
         public int? Status { get; set; }
+        public string? Comments { get; set; }
 
         public virtual User? Pc { get; set; }
         public virtual User? Pm { get; set; }

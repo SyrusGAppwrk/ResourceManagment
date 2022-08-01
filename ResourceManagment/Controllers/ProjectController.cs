@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
 
@@ -6,6 +7,7 @@ namespace ResourceManagment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+  //  [Authorize]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
@@ -18,7 +20,7 @@ namespace ResourceManagment.Controllers
         {
             try
             {
-                return Ok(await _projectRepository.GetProjects());
+                return Ok( _projectRepository.GetProjects());
             }
             catch (Exception)
             {

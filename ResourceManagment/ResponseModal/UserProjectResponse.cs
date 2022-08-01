@@ -13,6 +13,8 @@
         public int pmid { get; set; }
         public string Avalibiltty { get; set; }
         public double? TotalBilling { get; set; }
+        public string? Comments { get; set; }
+        public string? Department { get; set; }
       
 
     }

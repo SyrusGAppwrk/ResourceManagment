@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
 using ResourceManagment.ResponseModal;
@@ -7,6 +8,7 @@ namespace ResourceManagment.Controllers
 {
     [Route("api/v1")]
     [ApiController]
+   //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -128,12 +130,12 @@ namespace ResourceManagment.Controllers
             }
         }
         [HttpGet]
-        [Route("GetUserProfiles")]
-        public async Task<ActionResult> GetUserProfiles(int id)
+        [Route("GetUserProfiles/{id}/{r}")]
+        public async Task<ActionResult> GetUserProfiles(int id, int r)
         {
             try
             {
-                var users =  _userRepository.GetUserProfiles(id);
+                var users =  _userRepository.GetUserProfiles(id,r);
                 if (users == null)
                 {
                     return BadRequest();
