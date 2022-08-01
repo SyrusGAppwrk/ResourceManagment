@@ -106,7 +106,8 @@ namespace ResourceManagment.Repository
                               up.Avalibiltty,
                               up.TotalBilling,
                               up.Status,
-                              up.Comments
+                              up.Comments,
+                              CreatedDate=Convert.ToDateTime(up.CreatedDate).ToString("yyyy-MM-dd")
                           }).ToList();
             IList<UserProjectResponse> data = new List<UserProjectResponse>();
             foreach (var item in upList)
@@ -124,7 +125,8 @@ namespace ResourceManagment.Repository
                     pmid = item.pmid,
                     Avalibiltty = item.Avalibiltty,
                     TotalBilling = item.TotalBilling,
-                    Comments=item.Comments
+                    Comments=item.Comments,
+                    CreatedDate=item.CreatedDate
                 });
             }
             return data;

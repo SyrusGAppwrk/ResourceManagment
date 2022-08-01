@@ -15,6 +15,7 @@
         public double? TotalBilling { get; set; }
         public string? Comments { get; set; }
         public string? Department { get; set; }
+        public string? CreatedDate { get; set; }
       
 
     }
