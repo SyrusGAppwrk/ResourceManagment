@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ResourceManagment.Configurations;
+using ResourceManagment.Implementations;
 using ResourceManagment.Models;
 using ResourceManagment.Repository;
+using ResourceManagment.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionStrings:myCon"];
 builder.Services.AddDbContext<dbResourceMangamentSystemContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<appwrkco_msContext>(options => options.UseSqlServer(connectionString));
 
 // Jwt Configuration 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
@@ -63,6 +66,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectRepository>();
 builder.Services.AddScoped<ILoginManger, ILoginMangerClass>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IAssignTaskRepository, AssignTaskRepository>();
+builder.Services.AddScoped<IDailyTimeLogRepository, DailyTImeLogRespository>();
 builder.Services.AddCors(c =>
 {
     c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

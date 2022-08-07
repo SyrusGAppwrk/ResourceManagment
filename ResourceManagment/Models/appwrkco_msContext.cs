@@ -16,6 +16,8 @@ namespace ResourceManagment.Models
         {
         }
 
+        public virtual DbSet<AssignTask> AssignTasks { get; set; } = null!;
+        public virtual DbSet<DailyTaskLog> DailyTaskLogs { get; set; } = null!;
         public virtual DbSet<Department> Departments { get; set; } = null!;
         public virtual DbSet<Project> Projects { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
@@ -34,6 +36,67 @@ namespace ResourceManagment.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ms");
+
+            modelBuilder.Entity<AssignTask>(entity =>
+            {
+                entity.ToTable("assignTask");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createdDate");
+
+                entity.Property(e => e.Pcid).HasColumnName("PCid");
+
+                entity.Property(e => e.Pmid).HasColumnName("PMid");
+
+                entity.HasOne(d => d.Emp)
+                    .WithMany(p => p.AssignTaskEmps)
+                    .HasForeignKey(d => d.Empid)
+                    .HasConstraintName("FK__assignTas__Empid__571DF1D5");
+
+                entity.HasOne(d => d.Pc)
+                    .WithMany(p => p.AssignTaskPcs)
+                    .HasForeignKey(d => d.Pcid)
+                    .HasConstraintName("FK__assignTask__PCid__59063A47");
+
+                entity.HasOne(d => d.Pm)
+                    .WithMany(p => p.AssignTaskPms)
+                    .HasForeignKey(d => d.Pmid)
+                    .HasConstraintName("FK__assignTask__PMid__59FA5E80");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssignTasks)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__assignTas__Proje__5812160E");
+            });
+
+            modelBuilder.Entity<DailyTaskLog>(entity =>
+            {
+                entity.ToTable("DailyTaskLog");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AssignTaskId).HasColumnName("assignTaskId");
+
+                entity.Property(e => e.Avalibiltty)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Comments).IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createdDate");
+
+                entity.Property(e => e.Status).HasColumnName("status");
+
+                entity.HasOne(d => d.AssignTask)
+                    .WithMany(p => p.DailyTaskLogs)
+                    .HasForeignKey(d => d.AssignTaskId)
+                    .HasConstraintName("FK__DailyTask__assig__5CD6CB2B");
+            });
 
             modelBuilder.Entity<Department>(entity =>
             {

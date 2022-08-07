@@ -16,7 +16,7 @@ namespace ResourceManagment.Controllers
 
         // Login Existing User
         [HttpPost]
-        [Route("user/login")]
+        [Route("Emp/login")]
         public IActionResult Login([FromBody] LoginModal existingUser)
         {
             // Check User State

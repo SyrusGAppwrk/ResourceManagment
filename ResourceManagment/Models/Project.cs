@@ -8,6 +8,7 @@ namespace ResourceManagment.Models
     {
         public Project()
         {
+            AssignTasks = new HashSet<AssignTask>();
             UserProjects = new HashSet<UserProject>();
         }
 
@@ -21,12 +22,13 @@ namespace ResourceManagment.Models
         public string? Code { get; set; }
         public string? Url { get; set; }
         public DateTime? Sdate { get; set; }
-        public DateTime? Edate { get; set; }
         [NotMapped]
         public string? SrtDate { get; set; }
+        public DateTime? Edate { get; set; }
         [NotMapped]
         public string? EndDate { get; set; }
 
+        public virtual ICollection<AssignTask> AssignTasks { get; set; }
         public virtual ICollection<UserProject> UserProjects { get; set; }
     }
 }
