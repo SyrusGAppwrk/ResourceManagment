@@ -12,19 +12,20 @@ namespace ResourceManagment.Models
         }
 
         public int Id { get; set; }
-        public int? Empid { get; set; } = null;
+        public int? Empid { get; set; }
         public int? ProjectId { get; set; }
         public int? Pcid { get; set; }
         public int? Pmid { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }=DateTime .Now;   
         public int? Status { get; set; }
-
+        public int Billable { get; set; }
         [NotMapped]
         public virtual User? Emp { get; set; }
         [NotMapped]
         public virtual User? Pc { get; set; }
         [NotMapped]
         public virtual User? Pm { get; set; }
+
         public virtual Project? Project { get; set; }
         public virtual ICollection<DailyTaskLog> DailyTaskLogs { get; set; }
     }

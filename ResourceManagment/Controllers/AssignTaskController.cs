@@ -39,7 +39,8 @@ namespace ResourceManagment.Controllers
                     return BadRequest();
                 }
                 var Createdtask = await _assignTaskRepository.PostAssignTask(assign);
-                return CreatedAtAction(nameof(GetAssginTask), new { id = Createdtask.Id }, Createdtask);
+                var data = CreatedAtAction(nameof(GetAssginTask), new { id = Createdtask.Id }, Createdtask);
+                return Ok(data);
 
             }
             catch (Exception)

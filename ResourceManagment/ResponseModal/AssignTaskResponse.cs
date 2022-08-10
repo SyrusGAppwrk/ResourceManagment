@@ -9,5 +9,6 @@
         public string? Manger { get; set; }
         public string? CreatedDate { get; set; }
         public int? status { get; set; }
+        public int? Billable { get; set; }
     }
 }

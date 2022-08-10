@@ -5,7 +5,7 @@ using ResourceManagment.ResponseModal;
 
 namespace ResourceManagment.Controllers
 {
-    [Route("Api/DT")]
+    [Route("api/log")]
     [ApiController]
     public class DailyTimeLogController : ControllerBase
     {
@@ -30,9 +30,26 @@ namespace ResourceManagment.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not Found"));
             }
         }
-        [HttpPost]
-        public async Task<ActionResult> PostDailyLog(DailyTaskLog dailyTask )
+        [HttpGet]
+        [Route("GetDailyLogByDate/{Depid}/{Srtdate}/{endate}")]
+        public async Task<ActionResult<DailyTimeLogResponse>> GetDailyLogByDate(int Depid,DateTime Srtdate,DateTime endate)
         {
+            try
+            {
+                var data = _dailyTimeLogRepository.GetDailyLogByDate(Depid, Srtdate, endate);
+                return Ok(data);
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ("Data Not Found"));
+            }
+        }
+        [HttpPost]
+        [Route("PostDailyLog")]
+        public async Task<ActionResult> PostDailyLog(DailyTaskLog dailyTask )
+            {
             try
             {
                 if (dailyTask == null)
@@ -40,7 +57,8 @@ namespace ResourceManagment.Controllers
                     return BadRequest();
                 }
                 var Createdtask = await _dailyTimeLogRepository.PostDailyLog(dailyTask);
-                return CreatedAtAction(nameof(GetDailyTimeLog), new { id = Createdtask.Id }, Createdtask);
+                   var data= CreatedAtAction(nameof(GetDailyTimeLog), new { id = Createdtask.Id }, Createdtask);
+                return Ok(data);
 
             }
             catch (Exception)

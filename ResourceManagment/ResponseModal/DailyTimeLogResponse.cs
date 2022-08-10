@@ -1,4 +1,6 @@
-﻿namespace ResourceManagment.ResponseModal
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ResourceManagment.ResponseModal
 {
     public class DailyTimeLogResponse
     {
@@ -9,9 +11,14 @@
         public string? Coordinator { get; set; }
         public string? Manager { get; set; }
         public int? status { get; set; }
+        public int Bilable { get; set; }
         public string? createddate { get; set; }
         public string? Avalibiltty { get; set; }
         public double? BillingHour { get; set; }
         public string? Comments { get; set; }
+        [NotMapped]
+        public string? Srtdate { get; set; }
+        [NotMapped]
+        public string? enddate { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace ResourceManagment.Repository
                                   ProjectName = p.Name,
                                   Coodinator = upc.Name,
                                   Manger = upm.Name,
+                                  Billable=at.Billable,
                                   CreatedDdate = Convert.ToDateTime(at.CreatedDate).ToString("yyyy/MM/dd"),
                                   status = at.Status,
                               }).ToList();
@@ -44,7 +45,8 @@ namespace ResourceManagment.Repository
                     ProjectName=Item.ProjectName,
                     Coordinator=Item.Coodinator,
                     Manger=Item.Manger,
-                    CreatedDate=Item.CreatedDdate,
+                    Billable=Item.Billable,
+                    CreatedDate =Item.CreatedDdate,
                     status=Item.status
                 });
             }

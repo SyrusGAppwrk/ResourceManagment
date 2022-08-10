@@ -1,23 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ResourceManagment.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ResourceManagment.Repository
 {
     public class ProjectRepository : IProjectRepository
     {
         private readonly dbResourceMangamentSystemContext _Context;
-        public ProjectRepository(dbResourceMangamentSystemContext context)
+        private IWebHostEnvironment _appEnvironment;
+        public ProjectRepository(dbResourceMangamentSystemContext context, IWebHostEnvironment appEnvironment)
         {
             _Context = context;
+            _appEnvironment = appEnvironment;   
         }
 
-        public async Task<Project> AddProjects(Project project)
+        public async Task<Project> AddProjects( Project project)
         {
             var list = await _Context.AddAsync(project);
             await _Context.SaveChangesAsync();
             return list.Entity;
         }
 
+       
         public async Task<Project> DeleteProject(int id)
         {
             var list = await _Context.Projects.Where(x => x.Id == id).FirstOrDefaultAsync();

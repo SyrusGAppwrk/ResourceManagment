@@ -11,15 +11,17 @@ namespace ResourceManagment.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
-        public ProjectController(IProjectRepository projectRepository)
+        private readonly IWebHostEnvironment _appEnvironment;
+        public ProjectController(IProjectRepository projectRepository, IWebHostEnvironment appEnvironment)
         {
             _projectRepository = projectRepository;
+            _appEnvironment = appEnvironment;   
         }
         [HttpGet]
          public async Task<ActionResult>GetProjects()
         {
             try
-            {
+                {
                 return Ok( _projectRepository.GetProjects());
             }
             catch (Exception)
@@ -48,7 +50,7 @@ namespace ResourceManagment.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddProjects(Project project)
+        public async Task<ActionResult> AddProjects([FromForm] Project project)
         {
             try
             {
@@ -56,6 +58,23 @@ namespace ResourceManagment.Controllers
                 {
                     return BadRequest();
                 }
+                string imageUrl = "";
+                var files1 = HttpContext.Request.Form.Files;
+                foreach (var file in files1)
+                {
+                    if (file != null && file.Length >0)
+                    { 
+                        var uploads=Path.Combine(_appEnvironment.WebRootPath, "UploadData");
+                        var filename=Guid.NewGuid().ToString().Replace("-","")+Path.GetExtension(file.FileName);
+                        imageUrl = "~/UploadData/" + filename;
+                        using (var fileStream = new FileStream(Path.Combine(uploads, filename), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        
+                    }
+                }
+                project.Code = imageUrl;    
                 var CreatedProject = await _projectRepository.AddProjects(project);
                 return CreatedAtAction(nameof(GetProjects), new { id = CreatedProject.Id }, CreatedProject);
 
