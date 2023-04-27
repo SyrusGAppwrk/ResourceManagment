@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagment", "ResourceManagment\ResourceManagment.csproj", "{FC9EEDCB-4E22-40C6-AA46-810DE4F27C34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceManagment", "ResourceManagment\ResourceManagment.csproj", "{FC9EEDCB-4E22-40C6-AA46-810DE4F27C34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceMangerTest", "ResourceMangerTest\ResourceMangerTest.csproj", "{DEA2C715-14BF-4A17-AA86-D1BFF1E5427E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FC9EEDCB-4E22-40C6-AA46-810DE4F27C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9EEDCB-4E22-40C6-AA46-810DE4F27C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC9EEDCB-4E22-40C6-AA46-810DE4F27C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEA2C715-14BF-4A17-AA86-D1BFF1E5427E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA2C715-14BF-4A17-AA86-D1BFF1E5427E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA2C715-14BF-4A17-AA86-D1BFF1E5427E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA2C715-14BF-4A17-AA86-D1BFF1E5427E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

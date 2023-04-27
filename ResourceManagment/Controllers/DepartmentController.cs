@@ -17,7 +17,7 @@ namespace ResourceManagment.Controllers
             _departmentRepository = departmentRepository;
         }
         [HttpGet]
-        public async Task<ActionResult> GetDepartments()
+        public async Task<IActionResult> GetDepartments()
         {
             try
             {
